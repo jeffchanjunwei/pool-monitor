@@ -1,7 +1,6 @@
 package main
 
 import (
-	//"os"
 	"log"
 	"time"
 	"flag"
@@ -13,7 +12,7 @@ import (
         "net"
         "errors"
         "fmt"
-
+	"os/exec"
 
 	"github.com/coreos/etcd/client"
 	"golang.org/x/net/context"
@@ -61,9 +60,6 @@ func main() {
                 if err != nil {
                         fmt.Println(errors.New("CA file load failed"))
                 }
-
-                fmt.Println(certBytes)
-                fmt.Println("test-1")
 
                 caCertPool := x509.NewCertPool()
                 ok := caCertPool.AppendCertsFromPEM(certBytes)
@@ -126,6 +122,10 @@ func main() {
 
 		if resp != nil {
 			Refresh()
+			cmd := exec.Command("rm", "-rf", "/etc/cni/net.d/10-calico.conf")
+		 	log.Println(cmd.Start())
+                        cmd = exec.Command("mv", "/etc/cni/net.d/new.conf", "/etc/cni/net.d/10-calico.conf")
+			log.Println(cmd.Start())
 		}
 	}
 
