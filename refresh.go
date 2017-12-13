@@ -93,7 +93,7 @@ func getIpPoolConfig(filePath string, info []string) ([]string, error) {
 			tmpLineStr := make([]string, 1)
 			tmpLineStr[0] = `	"ipv4_pools": ["`
 			tmpLineStr = append(tmpLineStr, tmpInfo)
-			tmpLineStr = append(tmpLineStr, `"],`)
+			tmpLineStr = append(tmpLineStr, `"]`)
 			lineStr = strings.Join(tmpLineStr, "")
 		}
 
